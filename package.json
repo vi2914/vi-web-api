@@ -1,0 +1,55 @@
+{
+    "name": "vi-web-api",
+    "version": "1.0.1",
+    "description": "Api For VI web",
+    "main": "src/app.js",
+    "scripts": {
+        "start": "node -r dotenv/config src/app.js"
+    },
+    "keywords": [],
+    "author": "Minecat",
+    "license": "none",
+    "type": "module",
+    "dependencies": {
+        "bcrypt": "^6.0.0",
+        "bcryptjs": "^3.0.3",
+        "body-parser": "2.2.1",
+        "cookie-parser": "^1.4.7",
+        "cors": "2.8.5",
+        "dotenv": "^17.3.1",
+        "express": "5.1.0",
+        "jsonwebtoken": "^9.0.3",
+        "mysql2": "^3.18.1"
+    },
+    "installPath": "~/storbedrift/web/api",
+    "nginx": {
+        "service": {
+            "name": "vi-web-api",
+            "port": 3868,
+            "uri": "api/",
+            "https": false,
+            "servers": [
+                "localhost"
+            ]
+        },
+        "localhost": {
+            "urls": [
+                "_"
+            ],
+            "certificate": "/etc/ssl/certs/selfsigned.crt",
+            "certificateKey": "/etc/ssl/private/selfsigned.key"
+        }
+    },
+    "pm2": {
+        "name": "vi-web-api",
+        "file": "src/app.js"
+    },
+    "autoUpdate": {
+        "githubWebhook": {
+            "branch": [
+                "main"
+            ],
+            "repo": "Minecat300/vi-web-api"
+        }
+    }
+}
