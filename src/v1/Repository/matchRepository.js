@@ -5,18 +5,69 @@ import { getPool } from "../data/db.js";
 
 export async function getMatches() {
     const pool = await getPool();
-    const [rows] = await pool.query(
-        'SELECT * FROM Game_Match ORDER BY Match_Time'
-    );
+
+    const [rows] = await pool.query(`
+        SELECT
+            gm.Match_ID,
+            gm.Match_Time,
+            gm.Result,
+
+            gm.Home_Team_ID,
+            home.Team_Name AS Home_Team_Name,
+
+            gm.Away_Team_ID,
+            away.Team_Name AS Away_Team_Name,
+
+            gm.Referee_ID,
+
+            gm.Arena_ID,
+            gm.Sport_ID
+
+        FROM Game_Match gm
+
+        INNER JOIN Team home
+            ON gm.Home_Team_ID = home.Team_ID
+
+        INNER JOIN Team away
+            ON gm.Away_Team_ID = away.Team_ID
+
+        ORDER BY gm.Match_Time
+    `);
+
     return rows;
 }
 
 export async function getMatch(id) {
     const pool = await getPool();
-    const [rows] = await pool.query(
-        'SELECT * FROM Game_Match WHERE Match_ID = ?',
-        [id]
-    );
+
+    const [rows] = await pool.query(`
+        SELECT
+            gm.Match_ID,
+            gm.Match_Time,
+            gm.Result,
+
+            gm.Home_Team_ID,
+            home.Team_Name AS Home_Team_Name,
+
+            gm.Away_Team_ID,
+            away.Team_Name AS Away_Team_Name,
+
+            gm.Referee_ID,
+
+            gm.Arena_ID,
+            gm.Sport_ID
+
+        FROM Game_Match gm
+
+        INNER JOIN Team home
+            ON gm.Home_Team_ID = home.Team_ID
+
+        INNER JOIN Team away
+            ON gm.Away_Team_ID = away.Team_ID
+
+        WHERE gm.Match_ID = ?
+    `, [id]);
+
     return rows[0];
 }
 
