@@ -12,16 +12,25 @@ export async function getMatches() {
             gm.Match_Time,
             gm.Result,
 
+            -- Home Team
             gm.Home_Team_ID,
             home.Team_Name AS Home_Team_Name,
 
+            -- Away Team
             gm.Away_Team_ID,
             away.Team_Name AS Away_Team_Name,
 
+            -- Referee
             gm.Referee_ID,
+            acc.Username AS Referee_Name,
 
+            -- Arena
             gm.Arena_ID,
-            gm.Sport_ID
+            arena.Arena_Name,
+
+            -- Sport
+            gm.Sport_ID,
+            sport.Sport_Name
 
         FROM Game_Match gm
 
@@ -30,6 +39,15 @@ export async function getMatches() {
 
         INNER JOIN Team away
             ON gm.Away_Team_ID = away.Team_ID
+
+        LEFT JOIN Account acc
+            ON gm.Referee_ID = acc.Account_ID
+
+        LEFT JOIN Arena arena
+            ON gm.Arena_ID = arena.Arena_ID
+
+        LEFT JOIN Sport sport
+            ON gm.Sport_ID = sport.Sport_ID
 
         ORDER BY gm.Match_Time
     `);
@@ -46,16 +64,25 @@ export async function getMatch(id) {
             gm.Match_Time,
             gm.Result,
 
+            -- Home Team
             gm.Home_Team_ID,
             home.Team_Name AS Home_Team_Name,
 
+            -- Away Team
             gm.Away_Team_ID,
             away.Team_Name AS Away_Team_Name,
 
+            -- Referee
             gm.Referee_ID,
+            acc.Username AS Referee_Name,
 
+            -- Arena
             gm.Arena_ID,
-            gm.Sport_ID
+            arena.Arena_Name,
+
+            -- Sport
+            gm.Sport_ID,
+            sport.Sport_Name
 
         FROM Game_Match gm
 
@@ -64,6 +91,15 @@ export async function getMatch(id) {
 
         INNER JOIN Team away
             ON gm.Away_Team_ID = away.Team_ID
+
+        LEFT JOIN Account acc
+            ON gm.Referee_ID = acc.Account_ID
+
+        LEFT JOIN Arena arena
+            ON gm.Arena_ID = arena.Arena_ID
+
+        LEFT JOIN Sport sport
+            ON gm.Sport_ID = sport.Sport_ID
 
         WHERE gm.Match_ID = ?
     `, [id]);
@@ -176,16 +212,56 @@ export async function getMatchesByDate(datetime) {
     return rows;
 }
 
-export async function getMatchesByReferee(refereeId) {
+export async function getMatchesByReferee(accountID) {
     const pool = await getPool();
-    const [rows] = await pool.query(
-        `SELECT m.*
-         FROM Game_Match m
-         JOIN Referee r ON m.Referee_ID = r.Referee_ID
-         WHERE r.Referee_ID = ?
-         ORDER BY m.Match_Time`,
-        [refereeId]
-    );
+
+    const [rows] = await pool.query(`
+        SELECT
+            gm.Match_ID,
+            gm.Match_Time,
+            gm.Result,
+
+            -- Home Team
+            gm.Home_Team_ID,
+            home.Team_Name AS Home_Team_Name,
+
+            -- Away Team
+            gm.Away_Team_ID,
+            away.Team_Name AS Away_Team_Name,
+
+            -- Referee
+            gm.Referee_ID,
+            acc.Username AS Referee_Name,
+
+            -- Arena
+            gm.Arena_ID,
+            arena.Arena_Name,
+
+            -- Sport
+            gm.Sport_ID,
+            sport.Sport_Name
+
+        FROM Game_Match gm
+
+        INNER JOIN Team home
+            ON gm.Home_Team_ID = home.Team_ID
+
+        INNER JOIN Team away
+            ON gm.Away_Team_ID = away.Team_ID
+
+        LEFT JOIN Account acc
+            ON gm.Referee_ID = acc.Account_ID
+
+        LEFT JOIN Arena arena
+            ON gm.Arena_ID = arena.Arena_ID
+
+        LEFT JOIN Sport sport
+            ON gm.Sport_ID = sport.Sport_ID
+
+        WHERE gm.Referee_ID = ?
+
+        ORDER BY gm.Match_Time
+    `, [accountID]);
 
     return rows;
 }
