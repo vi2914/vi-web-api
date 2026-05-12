@@ -35,13 +35,11 @@ const router = express.Router();
 
 router.get(
     "/age-groups",
-    authenticateToken,
     getAgeGroups
 );
 
 router.get(
     "/age-groups/:id",
-    authenticateToken,
     getAgeGroup
 );
 
@@ -72,13 +70,11 @@ router.delete(
 
 router.get(
     "/sports",
-    authenticateToken,
     getSports
 );
 
 router.get(
     "/sports/:id",
-    authenticateToken,
     getSport
 );
 
@@ -109,13 +105,11 @@ router.delete(
 
 router.get(
     "/arenas",
-    authenticateToken,
     getArenas
 );
 
 router.get(
     "/arenas/:id",
-    authenticateToken,
     getArena
 );
 

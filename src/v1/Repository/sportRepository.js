@@ -13,7 +13,7 @@ export async function getSports() {
 export async function getSport(id) {
     const pool = await getPool();
     const result = await pool.query(
-        'SELECT * FROM Sport WHERE Sport_ID = $1',
+        'SELECT * FROM Sport WHERE Sport_ID = ?',
         [id]
     );
 
@@ -26,7 +26,7 @@ export async function createSport(sportName) {
     const pool = await getPool();
     const result = await pool.query(
         `INSERT INTO Sport (Sport_ID, Sport_name)
-             VALUES ($1, $2)
+             VALUES (?, ?)
              RETURNING *`,
         [id, sportName]
     );
@@ -38,8 +38,8 @@ export async function updateSport(id, sportName) {
     const pool = await getPool();
     const result = await pool.query(
         `UPDATE Sport
-             SET Sport_name = $1
-             WHERE Sport_ID = $2
+             SET Sport_name = ?
+             WHERE Sport_ID = ?
              RETURNING *`,
         [sportName, id]
     );
@@ -50,7 +50,7 @@ export async function updateSport(id, sportName) {
 export async function deleteSport(id) {
     const pool = await getPool();
     await pool.query(
-        'DELETE FROM Sport WHERE Sport_ID = $1',
+        'DELETE FROM Sport WHERE Sport_ID = ?',
         [id]
     );
 }

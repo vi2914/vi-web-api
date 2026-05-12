@@ -55,14 +55,12 @@ router.delete(
 // GET | localhost:3868/api/v1/matches/sport/:sportId
 router.get(
     "/sport/:sportId",
-    authenticateToken,
     getMatchesBySport
 );
 
 // GET | localhost:3868/api/v1/matches/team/:teamId
 router.get(
     "/team/:teamId",
-    authenticateToken,
     getMatchesByTeam
 );
 
@@ -77,14 +75,12 @@ router.post(
 // GET | localhost:3868/api/v1/matches/date/:date
 router.get(
     "/date/:date",
-    authenticateToken,
     getMatchesByDate
 );
 
 // GET | localhost:3868/api/v1/matches/referee/:refereeId
 router.get(
     "/referee/:refereeId",
-    authenticateToken,
     getMatchesByReferee
 );
 

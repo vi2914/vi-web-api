@@ -1,14 +1,14 @@
 // Services/adminService.js
 
 import {
-    getAllUsers,
-    getUserByUsername,
-    removeUserById
-} from "../Repository/adminRepository.js";
+    fetchUsers,
+    fetchUser,
+    deleteUserById
+} from "../Repository/accountRepository.js";
 
 class AdminService {
     async getUsers() {
-        const users = await getAllUsers();
+        const users = await fetchUsers();
 
         if (!users || users.length === 0) {
             return null;
@@ -18,7 +18,7 @@ class AdminService {
     }
 
     async getUserByUsername(username) {
-        return await getUserByUsername(username);
+        return await fetchUser(username);
     }
 
     async deleteUser(uuid) {
@@ -26,7 +26,7 @@ class AdminService {
             throw new Error("UUID required");
         }
 
-        await removeUserById(uuid);
+        await deleteUserById(uuid);
 
         return {
             message: `User '${uuid}' deleted`

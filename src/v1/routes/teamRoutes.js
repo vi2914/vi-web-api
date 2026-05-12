@@ -65,7 +65,6 @@ router.delete(
 // GET | localhost:3868/api/v1/teams/sport/:sportId
 router.get(
     "/sport/:sportId",
-    authenticateToken,
     getTeamsBySport
 );
 
@@ -76,7 +75,6 @@ router.get(
 // GET | localhost:3868/api/v1/teams/:teamId/players
 router.get(
     "/:teamId/players",
-    authenticateToken,
     getPlayersInTeam
 );
 
@@ -119,7 +117,6 @@ router.post(
 // GET | localhost:3868/api/v1/teams/:teamId/managers
 router.get(
     "/:teamId/managers",
-    authenticateToken,
     getTeamManagers
 );
 

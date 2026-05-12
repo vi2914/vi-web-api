@@ -3,10 +3,8 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-import {
-    registerAccount,
-    fetchUserByUsername
-} from "../Repository/authRepository.js";
+import { createUser as createAccountUser, fetchUser as fetchAccountUser } from "../Repository/accountRepository.js";
+
 
 class AuthService {
     async register(data) {
@@ -18,7 +16,7 @@ class AuthService {
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        const result = await registerAccount(
+        const result = await createAccountUser(
             email,
             username,
             hashedPassword,
@@ -42,7 +40,7 @@ class AuthService {
             throw new Error("Username and password are required");
         }
 
-        const user = await fetchUserByUsername(username);
+        const user = await fetchAccountUser(username);
 
         if (!user) {
             throw new Error("Invalid username or password");

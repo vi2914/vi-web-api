@@ -12,7 +12,7 @@ export async function getMatches() {
 export async function getMatch(id) {
     const pool = await getPool();
     const result = await pool.query(
-        'SELECT * FROM Game_Match WHERE Match_ID = $1',
+        'SELECT * FROM Game_Match WHERE Match_ID = ?',
         [id]
     );
     return result.rows[0];
@@ -23,7 +23,7 @@ export async function createMatch(matchDate, homeTeamID, awayTeamID, RefereeID, 
     const pool = await getPool();
     const result = await pool.query(
         `INSERT INTO Game_Match (Match_ID, Home_team_ID, Away_team_ID, Referee_ID, Match_date, Match_time, Arena_ID, Sport_ID)
-             VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
              RETURNING *`,
         [id, homeTeamID, awayTeamID, RefereeID, matchDate, matchTime, arenaID, sportID]
     );
@@ -34,8 +34,8 @@ export async function updateMatch(id, matchDate, homeTeamID, awayTeamID, Referee
     const pool = await getPool();
     const result = await pool.query(
         `UPDATE Game_Match
-             SET Home_team_ID = $1, Away_team_ID = $2, Referee_ID = $3, Match_date = $4, Match_time = $5, Arena_ID = $6, Sport_ID = $7
-             WHERE Match_ID = $8
+             SET Home_team_ID = ?, Away_team_ID = ?, Referee_ID = ?, Match_date = ?, Match_time = ?, Arena_ID = ?, Sport_ID = ?
+             WHERE Match_ID = ?
              RETURNING *`,
         [homeTeamID, awayTeamID, RefereeID, matchDate, matchTime, arenaID, sportID, id]
     );
@@ -45,7 +45,7 @@ export async function updateMatch(id, matchDate, homeTeamID, awayTeamID, Referee
 export async function deleteMatch(id) {
     const pool = await getPool();
     await pool.query(
-        'DELETE FROM Game_Match WHERE Match_ID = $1',
+        'DELETE FROM Game_Match WHERE Match_ID = ?',
         [id]
     );
 }
@@ -56,7 +56,7 @@ export async function getMatchesBySport(sportId) {
         `SELECT m.*
          FROM Game_Match m
          JOIN Sport s ON m.Sport_ID = s.Sport_ID
-            WHERE s.Sport_ID = $1
+            WHERE s.Sport_ID = ?
             ORDER BY m.Match_date`,
         [sportId]
     );
@@ -69,7 +69,7 @@ export async function getMatchesByTeam(teamId) {
         `SELECT m.*
          FROM Game_Match m
          JOIN Team t ON (m.Home_team_ID = t.Team_ID OR m.Away_team_ID = t.Team_ID)
-            WHERE t.Team_ID = $1
+            WHERE t.Team_ID = ?
             ORDER BY m.Match_date`,
         [teamId]
     );
@@ -80,8 +80,8 @@ export async function addMatchResult(matchId, matchResult) {
     const pool = await getPool();
     const result = await pool.query(
         `UPDATE Game_Match
-             SET Result = $1
-             WHERE Match_ID = $2
+             SET Result = ?
+             WHERE Match_ID = ?
              RETURNING *`,
         [matchResult, matchId]
     );
@@ -94,7 +94,7 @@ export async function getMatchesByDate(datetime) {
     const result = await pool.query(
         `SELECT *
          FROM Game_Match
-         WHERE Match_date = $1
+         WHERE Match_date = ?
          ORDER BY Match_time`,
         [date]
     );
@@ -107,7 +107,7 @@ export async function getMatchesByReferee(refereeId) {
         `SELECT m.*
          FROM Game_Match m
          JOIN Referee r ON m.Referee_ID = r.Referee_ID
-            WHERE r.Referee_ID = $1
+            WHERE r.Referee_ID = ?
             ORDER BY m.Match_date`,
         [refereeId]
     );
