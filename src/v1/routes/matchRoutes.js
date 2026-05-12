@@ -27,7 +27,7 @@ import {
 const router = express.Router();
 
 // GET | localhost:3868/api/v1/matches
-router.get("/", authenticateToken, getMatches);
+router.get("/", getMatches);
 
 // GET | localhost:3868/api/v1/matches/date/:date
 router.get(
@@ -47,7 +47,7 @@ router.get(
 )
 
 // GET | localhost:3868/api/v1/matches/:id
-router.get("/:id", authenticateToken, getMatchById);
+router.get("/:id", getMatchById);
 
 // POST | localhost:3868/api/v1/matches
 router.post(
