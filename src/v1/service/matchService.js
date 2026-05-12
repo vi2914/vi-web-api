@@ -19,26 +19,35 @@ class MatchService {
         return await getMatch(id);
     }
     async create(data) {
+        const date = data.Match_date; // Assuming this is in 'YYYY-MM-DD' format
+        const time = data.Match_time; // Assuming this is in 'HH:mm:ss' format
+
+        // Combine into ISO format: YYYY-MM-DDTHH:mm:ss
+        const dateTimeString = `${date}T${time}`;
+
+        const timestamp = new Date(dateTimeString).getTime();
         return await createMatch(
-            data.matchDate,
-            data.homeTeamID,
-            data.awayTeamID,
-            data.RefereeID,
-            data.matchTime,
-            data.arenaID,
-            data.sportID
+            data.Home_team_ID,
+            data.Away_team_ID,
+            data.Referee_ID,
+            timestamp,
+            data.Arena_ID,
+            data.Sport_ID
         );
     }
     async update(id, data) {
+        const date = data.Match_date; // Assuming this is in 'YYYY-MM-DD' format
+        const time = data.Match_time; // Assuming this is in 'HH:mm:ss' format
+        const dateTimeString = `${date}T${time}`;
+        const timestamp = new Date(dateTimeString).getTime();
         return await updateMatch(
             id,
-            data.matchDate,
-            data.homeTeamID,
-            data.awayTeamID,
-            data.RefereeID,
-            data.matchTime,
-            data.arenaID,
-            data.sportID
+            data.Home_team_ID,
+            data.Away_team_ID,
+            data.Referee_ID,
+            timestamp,
+            data.Arena_ID,
+            data.Sport_ID
         );
     }
     async delete(id) {

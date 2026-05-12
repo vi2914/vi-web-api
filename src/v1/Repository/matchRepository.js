@@ -20,14 +20,14 @@ export async function getMatch(id) {
     return rows[0];
 }
 
-export async function createMatch(matchDate, homeTeamID, awayTeamID, RefereeID, matchTime, arenaID, sportID) {
+export async function createMatch(homeTeamID, awayTeamID, RefereeID, matchTime, arenaID, sportID) {
     const id = randomUUID();
     const pool = await getPool();
 
     await pool.query(
         `INSERT INTO Game_Match 
         (Match_ID, Home_team_ID, Away_team_ID, Referee_ID, Match_Time, Arena_ID, Sport_ID)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+        VALUES (?, ?, ?, ?, ?, ?, ?)`,
         [id, homeTeamID, awayTeamID, RefereeID, matchTime, arenaID, sportID]
     );
 
