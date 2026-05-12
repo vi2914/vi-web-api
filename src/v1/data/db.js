@@ -34,7 +34,7 @@ export async function getPool() {
             database,
             password: DB_PASSWORD,
             waitForConnections: true,
-            connectionLimit: 10,
+            connectionLimit: 10000000,
             queueLimit: 0
         });
     } catch (error) {
