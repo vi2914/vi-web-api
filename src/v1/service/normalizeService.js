@@ -15,44 +15,29 @@ class NormalizeService {
     async getAgeGroups() {
         return await getAgeGroups();
     }
-    async getSports() {
-        return await getSports();
-    }
     async getArenas() {
         return await getArenas();
     }
     async getAgeGroup(id) {
         return await getAgeGroup(id);
     }
-    async getSport(id) {
-        return await getSport(id);
-    }
     async getArena(id) {
         return await getArena(id);
     }
     async createAgeGroup(data) {
-        return await createAgeGroup(data.group_name);
-    }
-    async createSport(data) {
-        return await createSport(data.sport_name);
+        return await createAgeGroup(data.Group_name);
     }
     async createArena(data) {
-        return await createArena(data.arena_name);
+        return await createArena(data.Arena_name);
     }
     async updateAgeGroup(id, data) {
-        return await updateAgeGroup(id, data.group_name);
-    }
-    async updateSport(id, data) {
-        return await updateSport(id, data.sport_name);
+        return await updateAgeGroup(id, data.Group_name);
     }
     async updateArena(id, data) {
-        return await updateArena(id, data.arena_name);
+        return await updateArena(id, data.Arena_name);
     }
     async deleteAgeGroup(id) {
         return await deleteAgeGroup(id);
-    }
-    async deleteSport(id) {
-        return await deleteSport(id);
     }
     async deleteArena(id) {
         return await deleteArena(id);

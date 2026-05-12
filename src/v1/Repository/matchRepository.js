@@ -6,7 +6,7 @@ import { getPool } from "../data/db.js";
 export async function getMatches() {
     const pool = await getPool();
     const [rows] = await pool.query(
-        'SELECT * FROM Game_Match ORDER BY Match_date'
+        'SELECT * FROM Game_Match ORDER BY Match_Time'
     );
     return rows;
 }
@@ -26,7 +26,7 @@ export async function createMatch(matchDate, homeTeamID, awayTeamID, RefereeID, 
 
     await pool.query(
         `INSERT INTO Game_Match 
-        (Match_ID, Home_team_ID, Away_team_ID, Referee_ID, Match_date, Match_time, Arena_ID, Sport_ID)
+        (Match_ID, Home_team_ID, Away_team_ID, Referee_ID, Match_date, Match_Time, Arena_ID, Sport_ID)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
         [id, homeTeamID, awayTeamID, RefereeID, matchDate, matchTime, arenaID, sportID]
     );
@@ -44,7 +44,7 @@ export async function updateMatch(id, matchDate, homeTeamID, awayTeamID, Referee
 
     await pool.query(
         `UPDATE Game_Match
-         SET Home_team_ID = ?, Away_team_ID = ?, Referee_ID = ?, Match_date = ?, Match_time = ?, Arena_ID = ?, Sport_ID = ?
+         SET Home_team_ID = ?, Away_team_ID = ?, Referee_ID = ?, Match_date = ?, Match_Time = ?, Arena_ID = ?, Sport_ID = ?
          WHERE Match_ID = ?`,
         [homeTeamID, awayTeamID, RefereeID, matchDate, matchTime, arenaID, sportID, id]
     );
@@ -72,7 +72,7 @@ export async function getMatchesBySport(sportId) {
          FROM Game_Match m
          JOIN Sport s ON m.Sport_ID = s.Sport_ID
          WHERE s.Sport_ID = ?
-         ORDER BY m.Match_date`,
+         ORDER BY m.Match_Time`,
         [sportId]
     );
     return rows;
@@ -85,7 +85,7 @@ export async function getMatchesByTeam(teamId) {
          FROM Game_Match m
          JOIN Team t ON (m.Home_team_ID = t.Team_ID OR m.Away_team_ID = t.Team_ID)
          WHERE t.Team_ID = ?
-         ORDER BY m.Match_date`,
+         ORDER BY m.Match_Time`,
         [teamId]
     );
     return rows;
@@ -117,7 +117,7 @@ export async function getMatchesByDate(datetime) {
         `SELECT *
          FROM Game_Match
          WHERE Match_date = ?
-         ORDER BY Match_time`,
+         ORDER BY Match_Time`,
         [date]
     );
 
@@ -131,7 +131,7 @@ export async function getMatchesByReferee(refereeId) {
          FROM Game_Match m
          JOIN Referee r ON m.Referee_ID = r.Referee_ID
          WHERE r.Referee_ID = ?
-         ORDER BY m.Match_date`,
+         ORDER BY m.Match_Time`,
         [refereeId]
     );
 

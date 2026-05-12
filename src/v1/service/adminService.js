@@ -18,7 +18,8 @@ class AdminService {
     }
 
     async getUserByUsername(username) {
-        return await fetchUser(username);
+        const name = username.username;
+        return await fetchUser(name);
     }
 
     async deleteUser(uuid) {

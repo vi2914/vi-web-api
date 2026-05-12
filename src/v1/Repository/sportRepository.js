@@ -1,3 +1,6 @@
+import { randomUUID } from "crypto";
+import { getPool } from "../data/db.js";
+
 export async function getSports() {
     const pool = await getPool();
     const [rows] = await pool.query(

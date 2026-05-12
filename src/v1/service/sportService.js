@@ -10,11 +10,13 @@ class SportService {
     }
 
     async createSport(data) {
-        return await createSport(data);
+        const name = data.Sport_Name;
+        return await createSport(name);
     }
 
     async updateSport(id, data) {
-        return await updateSport(id, data);
+        const name = data.Sport_Name;
+        return await updateSport(id, name);
     }
 
     async deleteSport(id) {
