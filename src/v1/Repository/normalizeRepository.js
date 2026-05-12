@@ -1,33 +1,41 @@
 import { randomUUID } from "crypto";
 import { getPool } from "../data/db.js";
 
+/* ---------------- AGE GROUP ---------------- */
+
 export async function createAgeGroup(ageGroupName) {
     const id = randomUUID();
     const pool = await getPool();
-    const result = await pool.query(
+
+    await pool.query(
         `INSERT INTO Age_Group (Age_group_ID, Group_name)
-             VALUES (?, ?)
-             RETURNING *`,
+         VALUES (?, ?)`,
         [id, ageGroupName]
     );
-    return result.rows[0];
+
+    const [rows] = await pool.query(
+        `SELECT * FROM Age_Group WHERE Age_group_ID = ?`,
+        [id]
+    );
+
+    return rows[0];
 }
 
 export async function getAgeGroups() {
     const pool = await getPool();
-    const result = await pool.query(
+    const [rows] = await pool.query(
         'SELECT * FROM Age_Group ORDER BY Group_name'
     );
-    return result.rows;
+    return rows;
 }
 
 export async function getAgeGroup(id) {
     const pool = await getPool();
-    const result = await pool.query(
+    const [rows] = await pool.query(
         'SELECT * FROM Age_Group WHERE Age_group_ID = ?',
         [id]
     );
-    return result.rows[0];
+    return rows[0];
 }
 
 export async function deleteAgeGroup(id) {
@@ -40,43 +48,57 @@ export async function deleteAgeGroup(id) {
 
 export async function updateAgeGroup(id, ageGroupName) {
     const pool = await getPool();
-    const result = await pool.query(
+
+    await pool.query(
         `UPDATE Age_Group
-             SET Group_name = ?
-             WHERE Age_group_ID = ?
-             RETURNING *`,
+         SET Group_name = ?
+         WHERE Age_group_ID = ?`,
         [ageGroupName, id]
     );
-    return result.rows[0];
+
+    const [rows] = await pool.query(
+        `SELECT * FROM Age_Group WHERE Age_group_ID = ?`,
+        [id]
+    );
+
+    return rows[0];
 }
+
+/* ---------------- ARENA ---------------- */
 
 export async function createArena(arenaName, capacity, location) {
     const id = randomUUID();
     const pool = await getPool();
-    const result = await pool.query(
+
+    await pool.query(
         `INSERT INTO Arena (Arena_ID, Arena_name, Capacity, Location)
-             VALUES (?, ?, ?, ?)
-             RETURNING *`,
+         VALUES (?, ?, ?, ?)`,
         [id, arenaName, capacity, location]
     );
-    return result.rows[0];
+
+    const [rows] = await pool.query(
+        `SELECT * FROM Arena WHERE Arena_ID = ?`,
+        [id]
+    );
+
+    return rows[0];
 }
 
 export async function getArenas() {
     const pool = await getPool();
-    const result = await pool.query(
+    const [rows] = await pool.query(
         'SELECT * FROM Arena ORDER BY Arena_name'
     );
-    return result.rows;
+    return rows;
 }
 
 export async function getArena(id) {
     const pool = await getPool();
-    const result = await pool.query(
+    const [rows] = await pool.query(
         'SELECT * FROM Arena WHERE Arena_ID = ?',
         [id]
     );
-    return result.rows[0];
+    return rows[0];
 }
 
 export async function deleteArena(id) {
@@ -89,12 +111,18 @@ export async function deleteArena(id) {
 
 export async function updateArena(id, arenaName, capacity, location) {
     const pool = await getPool();
-    const result = await pool.query(
+
+    await pool.query(
         `UPDATE Arena
-             SET Arena_name = ?, Capacity = ?, Location = ?
-             WHERE Arena_ID = ?
-             RETURNING *`,
+         SET Arena_name = ?, Capacity = ?, Location = ?
+         WHERE Arena_ID = ?`,
         [arenaName, capacity, location, id]
     );
-    return result.rows[0];
+
+    const [rows] = await pool.query(
+        `SELECT * FROM Arena WHERE Arena_ID = ?`,
+        [id]
+    );
+
+    return rows[0];
 }
