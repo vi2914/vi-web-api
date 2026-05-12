@@ -89,7 +89,7 @@ router.get(
 router.post(
     "/:matchId/result",
     authenticateToken,
-    authorizeRole("admin", "management"),
+    authorizeRole("admin", "management", "referee"),
     addMatchResult
 );
 
