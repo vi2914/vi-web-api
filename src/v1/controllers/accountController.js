@@ -78,3 +78,13 @@ export const updateAccountController = async (req, res) => {
         res.status(500).json({ error: "Failed to update account" });
     }
 };
+
+export const getReferees = async (req, res) => {
+    try {
+        const referees = await accountService.getReferees();
+        res.status(200).json(referees);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Failed to fetch referees" });
+    }
+};

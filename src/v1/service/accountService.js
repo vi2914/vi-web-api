@@ -7,7 +7,8 @@ import {
     fetchUsers,
     getAccountById,
     fetchUser,
-    updateAccount
+    updateAccount,
+    getReferees
 } from "../Repository/accountRepository.js";
 
 class AccountService {
@@ -57,6 +58,9 @@ class AccountService {
         await updateAccount(id, data);
 
         return await getAccountById(id);
+    }
+    async getReferees() {
+        return await getReferees();
     }
 }
 

@@ -269,3 +269,21 @@ export async function deleteUserByUsername(username) {
         conn.release();
     }
 }
+
+export async function getReferees() {
+    const pool = await getPool();
+    const sql = `
+    SELECT 
+      a.Account_ID,
+      a.Username
+    FROM Account a
+    INNER JOIN Account_Assigned_Role aar
+      ON a.Account_ID = aar.Account_ID
+    INNER JOIN Account_Role ar
+      ON aar.Role_ID = ar.Role_ID
+    WHERE ar.Role_name = ?
+  `;
+
+    const [rows] = await pool.query(sql, ["referee"]);
+    return rows;
+}

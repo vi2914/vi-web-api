@@ -16,6 +16,10 @@ import {
 } from "../controllers/matchController.js";
 
 import {
+    getReferees
+} from "../controllers/accountController.js";
+
+import {
     authenticateToken,
     authorizeRole
 } from "../middleware/authMiddleware.js";
@@ -83,5 +87,10 @@ router.get(
     "/referee/:refereeId",
     getMatchesByReferee
 );
+
+router.get(
+    "/referees",
+    getReferees
+)
 
 export default router;

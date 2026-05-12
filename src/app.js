@@ -13,7 +13,6 @@ import sportRoutes from "./v1/routes/sportRoutes.js";
 import teamRoutes from "./v1/routes/teamRoutes.js";
 import matchRoutes from "./v1/routes/matchRoutes.js";
 import normalizeRoutes from "./v1/routes/normalizeRoutes.js";
-import refereeRoutes from "./v1/routes/refereeRoutes.js";
 
 const PORT = 3868;
 
@@ -36,7 +35,6 @@ app.use('/api/v1/sports', sportRoutes);
 app.use('/api/v1/teams', teamRoutes);
 app.use('/api/v1/matches', matchRoutes);
 app.use('/api/v1/normalize', normalizeRoutes);
-app.use('/api/v1/referees', refereeRoutes);
 app.listen(PORT, () => {
     console.log(`This HTTP app is running on port: ${PORT}`);
 });
