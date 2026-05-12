@@ -20,10 +20,10 @@ const app = express();
 
 // Middlewares
 app.use(bodyParser.json());
-app.use(cors({
-    origin: "http://localhost:3869",
-    credentials: true
-}));
+// app.use(cors({
+//     origin: "http://localhost:3869",
+//     credentials: true
+// }));
 
 // setup Routes 
 
