@@ -26,9 +26,9 @@ export async function createMatch(matchDate, homeTeamID, awayTeamID, RefereeID, 
 
     await pool.query(
         `INSERT INTO Game_Match 
-        (Match_ID, Home_team_ID, Away_team_ID, Referee_ID, Match_date, Match_Time, Arena_ID, Sport_ID)
+        (Match_ID, Home_team_ID, Away_team_ID, Referee_ID, Match_Time, Arena_ID, Sport_ID)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-        [id, homeTeamID, awayTeamID, RefereeID, matchDate, matchTime, arenaID, sportID]
+        [id, homeTeamID, awayTeamID, RefereeID, matchTime, arenaID, sportID]
     );
 
     const [rows] = await pool.query(
@@ -44,9 +44,9 @@ export async function updateMatch(id, matchDate, homeTeamID, awayTeamID, Referee
 
     await pool.query(
         `UPDATE Game_Match
-         SET Home_team_ID = ?, Away_team_ID = ?, Referee_ID = ?, Match_date = ?, Match_Time = ?, Arena_ID = ?, Sport_ID = ?
+         SET Home_team_ID = ?, Away_team_ID = ?, Referee_ID = ?, Match_Time = ?, Arena_ID = ?, Sport_ID = ?
          WHERE Match_ID = ?`,
-        [homeTeamID, awayTeamID, RefereeID, matchDate, matchTime, arenaID, sportID, id]
+        [homeTeamID, awayTeamID, RefereeID, matchTime, arenaID, sportID, id]
     );
 
     const [rows] = await pool.query(
@@ -116,7 +116,7 @@ export async function getMatchesByDate(datetime) {
     const [rows] = await pool.query(
         `SELECT *
          FROM Game_Match
-         WHERE Match_date = ?
+         WHERE Match_Time = ?
          ORDER BY Match_Time`,
         [date]
     );

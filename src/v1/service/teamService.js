@@ -25,11 +25,11 @@ class TeamService {
     }
 
     async createTeam(data) {
-        return await createTeam(data.team_name);
+        return await createTeam(data.Team_name);
     }
 
     async updateTeam(id, data) {
-        return await updateTeam(id, data.team_name);
+        return await updateTeam(id, data.Team_name);
     }
 
     async deleteTeam(id) {
@@ -53,7 +53,7 @@ class TeamService {
     }
 
     async createTeamWithPlayers(teamData, playerIds) {
-        return await createTeamWithPlayers(teamData.team_name, playerIds);
+        return await createTeamWithPlayers(teamData.Team_name, playerIds);
     }
 
     async createPlayer(playerData) {
