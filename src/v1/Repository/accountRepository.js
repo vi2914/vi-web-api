@@ -156,6 +156,7 @@ export async function updateAccount(accountId, account) {
              WHERE Account_ID = ?;`,
             [email, username, accountId]
         );
+        return await getAccountById(accountId);
     } catch (error) {
         throw error;
     }
@@ -184,6 +185,7 @@ export async function deleteUserById(userId) {
         );
 
         await conn.commit();
+        return { message: "User deleted successfully" };
     } catch (error) {
         await conn.rollback();
         throw error;
@@ -262,6 +264,7 @@ export async function deleteUserByUsername(username) {
         );
 
         await conn.commit();
+        return { message: "User deleted successfully" };
     } catch (error) {
         await conn.rollback();
         throw error;

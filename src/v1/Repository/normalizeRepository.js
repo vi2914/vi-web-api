@@ -44,6 +44,7 @@ export async function deleteAgeGroup(id) {
         'DELETE FROM Age_Group WHERE Age_group_ID = ?',
         [id]
     );
+    return { message: "Age group deleted successfully" };
 }
 
 export async function updateAgeGroup(id, ageGroupName) {
@@ -107,6 +108,7 @@ export async function deleteArena(id) {
         'DELETE FROM Arena WHERE Arena_ID = ?',
         [id]
     );
+    return { message: "Arena deleted successfully" };
 }
 
 export async function updateArena(id, arenaName, capacity, location) {

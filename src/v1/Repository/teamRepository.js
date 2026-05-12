@@ -60,6 +60,7 @@ export async function deleteTeam(id) {
         'DELETE FROM Team WHERE Team_ID = ?',
         [id]
     );
+    return { message: "Team deleted successfully" };
 }
 
 export async function getTeamsBySport(sportId) {
@@ -82,6 +83,7 @@ export async function addPlayerToTeam(teamId, playerId) {
          VALUES (?, ?)`,
         [teamId, playerId]
     );
+    return { message: "Player added to team successfully" };
 }
 
 export async function removePlayerFromTeam(teamId, playerId) {
@@ -91,6 +93,7 @@ export async function removePlayerFromTeam(teamId, playerId) {
          WHERE Team_ID = ? AND Player_ID = ?`,
         [teamId, playerId]
     );
+    return { message: "Player removed from team successfully" };
 }
 
 export async function getPlayersInTeam(teamId) {
@@ -162,6 +165,7 @@ export async function addTeamManager(teamId, accountId) {
          VALUES (?, ?)`,
         [teamId, accountId]
     );
+    return { message: "Team manager added successfully" };
 }
 
 export async function removeTeamManager(teamId, accountId) {
@@ -171,6 +175,7 @@ export async function removeTeamManager(teamId, accountId) {
          WHERE Team_ID = ? AND Account_ID = ?`,
         [teamId, accountId]
     );
+    return { message: "Team manager removed successfully" };
 }
 
 export async function getTeamManagers(teamId) {

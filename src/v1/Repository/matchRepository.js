@@ -114,6 +114,7 @@ export async function deleteMatch(id) {
         'DELETE FROM Game_Match WHERE Match_ID = ?',
         [id]
     );
+    return { message: "Match deleted successfully" };
 }
 
 export async function getMatchesBySport(sportId) {

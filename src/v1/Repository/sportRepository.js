@@ -60,4 +60,5 @@ export async function deleteSport(id) {
         'DELETE FROM Sport WHERE Sport_ID = ?',
         [id]
     );
+    return { message: "Sport deleted successfully" };
 }
