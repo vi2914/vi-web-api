@@ -10,8 +10,7 @@ class SportService {
     }
 
     async createSport(data) {
-        const name = data.Sport_Name;
-        return await createSport(name);
+        return await createSport(data.Sport_name);
     }
 
     async updateSport(id, data) {
