@@ -1,11 +1,10 @@
-﻿import bcrypt from "bcrypt";
+import bcrypt from "bcrypt";
 import {
     createUser,
     fetchUsers,
     getAccountById,
     fetchUser,
-    updateAccount,
-    deleteUserById
+    updateAccount
 } from "../Repository/accountRepository.js";
 
 export const createAccount = async (req, res) => {
@@ -51,23 +50,16 @@ export const getAccount = async (req, res) => {
     }
 };
 
-export const getAccountByUsernameController = async (req, res) => {
+export const getAccountByUsername = async (req, res) => {
     try {
         const { username } = req.params;
-        const user = await fetchUser(username);
+        const account = await fetchUser(username);
 
-        if (!user) {
+        if (!account) {
             return res.status(404).json({ error: "Account not found" });
         }
 
-        res.status(200).json({
-            uuid: user.uuid,
-            email: user.email,
-            username: user.username,
-            createdAt: user.createdAt,
-            updatedAt: user.updatedAt,
-            roles: user.roles
-        });
+        res.status(200).json(account);
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Failed to fetch account" });
@@ -77,35 +69,17 @@ export const getAccountByUsernameController = async (req, res) => {
 export const updateAccountController = async (req, res) => {
     try {
         const { id } = req.params;
-        const existing = await getAccountById(id);
+        const account = await getAccountById(id);
 
-        if (!existing) {
+        if (!account) {
             return res.status(404).json({ error: "Account not found" });
         }
 
         await updateAccount(id, req.body);
         const updated = await getAccountById(id);
-
         res.status(200).json(updated);
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Failed to update account" });
-    }
-};
-
-export const deleteAccountController = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const existing = await getAccountById(id);
-
-        if (!existing) {
-            return res.status(404).json({ error: "Account not found" });
-        }
-
-        await deleteUserById(id);
-        res.status(200).json({ message: "Account deleted successfully" });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Failed to delete account" });
     }
 };

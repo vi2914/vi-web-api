@@ -2,12 +2,11 @@ import express from "express";
 
 import {
     getUsers,
-    getUserByUsername,
-    deleteAccountById,
-    deleteAccount
-} from "../controllers/authController.js";
-import { deleteAccountController } from "../controllers/newUserController.js";
+    getUserByUsernameController,
+    deleteAccountById
+} from "../controllers/adminController.js";
 import { authenticateToken, authorizeRole } from "../middleware/authMiddleware.js";
+import { register } from "../controllers/authController.js";
 
 const router = express.Router();
 
@@ -15,15 +14,11 @@ const router = express.Router();
 router.get('/users', authenticateToken, authorizeRole('admin'), getUsers);
 
 // GET | localhost:3868/api/v1/admin/user/:username
-router.get('/user/:username', authenticateToken, authorizeRole('admin'), getUserByUsername);
+router.get('/user/:username', authenticateToken, authorizeRole('admin'), getUserByUsernameController);
 
 // DELETE | localhost:3868/api/v1/admin/user/:uuid
 router.delete('/user/:uuid', authenticateToken, authorizeRole('admin'), deleteAccountById);
 
-// DELETE | localhost:3868/api/v1/admin/delete
-router.delete('/delete', authenticateToken, authorizeRole('admin'), deleteAccount);
-
-// DELETE | localhost:3868/api/v1/admin/accounts/:id
-router.delete('/accounts/:id', authenticateToken, authorizeRole('admin'), deleteAccountController);
+router.post('/', authenticateToken, authorizeRole('admin'), register);
 
 export default router;
