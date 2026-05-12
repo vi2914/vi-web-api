@@ -110,65 +110,6 @@ export const deleteAgeGroup = async (req, res) => {
     }
 };
 
-/* =========================
-   SPORTS
-========================= */
-
-export const getSports = async (req, res) => {
-    try {
-        const sports = await normalizeService.getSports();
-
-        res.status(200).json(sports);
-
-    } catch (error) {
-        console.error(error);
-
-        res.status(500).json({
-            error: "Failed to fetch sports"
-        });
-    }
-};
-
-export const getSport = async (req, res) => {
-    try {
-        const sport = await normalizeService.getSport(
-            req.params.id
-        );
-
-        if (!sport) {
-            return res.status(404).json({
-                error: "Sport not found"
-            });
-        }
-
-        res.status(200).json(sport);
-
-    } catch (error) {
-        console.error(error);
-
-        res.status(500).json({
-            error: "Failed to fetch sport"
-        });
-    }
-};
-
-export const createSport = async (req, res) => {
-    try {
-        const result = await normalizeService.createSport(
-            req.body
-        );
-
-        res.status(201).json(result);
-
-    } catch (error) {
-        console.error(error);
-
-        res.status(500).json({
-            error: "Failed to create sport"
-        });
-    }
-};
-
 export const updateSport = async (req, res) => {
     try {
         const updated = await normalizeService.updateSport(

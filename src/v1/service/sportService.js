@@ -2,23 +2,23 @@ import { getSports, getSport, createSport, updateSport, deleteSport } from '../R
 
 class SportService {
     async getSports() {
-        return await sportRepository.getAll();
+        return await getSports();
     }
 
     async getSport(id) {
-        return await sportRepository.getById(id);
+        return await getSport(id);
     }
 
     async createSport(data) {
-        return await sportRepository.create(data.sport_name);
+        return await createSport(data);
     }
 
     async updateSport(id, data) {
-        return await sportRepository.update(id, data.sport_name);
+        return await updateSport(id, data);
     }
 
     async deleteSport(id) {
-        return await sportRepository.delete(id);
+        return await deleteSport(id);
     }
 }
 

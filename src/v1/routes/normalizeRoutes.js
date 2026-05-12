@@ -9,12 +9,6 @@ import {
     updateAgeGroup,
     deleteAgeGroup,
 
-    getSports,
-    getSport,
-    createSport,
-    updateSport,
-    deleteSport,
-
     getArenas,
     getArena,
     createArena,
@@ -62,41 +56,6 @@ router.delete(
     authenticateToken,
     authorizeRole("admin"),
     deleteAgeGroup
-);
-
-/* =========================
-   SPORTS
-========================= */
-
-router.get(
-    "/sports",
-    getSports
-);
-
-router.get(
-    "/sports/:id",
-    getSport
-);
-
-router.post(
-    "/sports",
-    authenticateToken,
-    authorizeRole("admin", "management"),
-    createSport
-);
-
-router.put(
-    "/sports/:id",
-    authenticateToken,
-    authorizeRole("admin", "management"),
-    updateSport
-);
-
-router.delete(
-    "/sports/:id",
-    authenticateToken,
-    authorizeRole("admin"),
-    deleteSport
 );
 
 /* =========================
