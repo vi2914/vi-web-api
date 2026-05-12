@@ -23,9 +23,8 @@ class MatchService {
         const time = data.Match_time; // Assuming this is in 'HH:mm:ss' format
 
         // Combine into ISO format: YYYY-MM-DDTHH:mm:ss
-        const dateTimeString = `${date}T${time}`;
+        const timestamp = `${date}T${time}`;
 
-        const timestamp = new Date(dateTimeString).getTime();
         return await createMatch(
             data.Home_team_ID,
             data.Away_team_ID,
