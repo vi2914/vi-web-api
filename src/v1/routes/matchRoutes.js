@@ -29,6 +29,23 @@ const router = express.Router();
 // GET | localhost:3868/api/v1/matches
 router.get("/", authenticateToken, getMatches);
 
+// GET | localhost:3868/api/v1/matches/date/:date
+router.get(
+    "/date/:date",
+    getMatchesByDate
+);
+
+// GET | localhost:3868/api/v1/matches/referee/:refereeId
+router.get(
+    "/referee/:refereeId",
+    getMatchesByReferee
+);
+
+router.get(
+    "/referees",
+    getReferees
+)
+
 // GET | localhost:3868/api/v1/matches/:id
 router.get("/:id", authenticateToken, getMatchById);
 
@@ -75,22 +92,5 @@ router.post(
     authorizeRole("admin", "management"),
     addMatchResult
 );
-
-// GET | localhost:3868/api/v1/matches/date/:date
-router.get(
-    "/date/:date",
-    getMatchesByDate
-);
-
-// GET | localhost:3868/api/v1/matches/referee/:refereeId
-router.get(
-    "/referee/:refereeId",
-    getMatchesByReferee
-);
-
-router.get(
-    "/referees",
-    getReferees
-)
 
 export default router;
