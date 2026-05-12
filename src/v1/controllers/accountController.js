@@ -1,32 +1,27 @@
-import bcrypt from "bcrypt";
-import {
-    createUser,
-    fetchUsers,
-    getAccountById,
-    fetchUser,
-    updateAccount
-} from "../Repository/accountRepository.js";
+// Controllers/accountController.js
+
+import accountService from "../service/accountService.js";
 
 export const createAccount = async (req, res) => {
     try {
-        const { email, username, password, roles = [] } = req.body;
+        const result = await accountService.createAccount(req.body);
 
-        if (!email || !username || !password) {
-            return res.status(400).json({ error: "Email, username, and password are required" });
-        }
-
-        const passwordHash = await bcrypt.hash(password, 10);
-        const result = await createUser(email, username, passwordHash, roles);
-        res.status(201).json({ uuid: result.uuid, email, username, roles });
+        res.status(201).json(result);
     } catch (error) {
         console.error(error);
+
+        if (error.message.includes("required")) {
+            return res.status(400).json({ error: error.message });
+        }
+
         res.status(500).json({ error: "Failed to create account" });
     }
 };
 
 export const getAccounts = async (req, res) => {
     try {
-        const accounts = await fetchUsers();
+        const accounts = await accountService.getAccounts();
+
         res.status(200).json(accounts);
     } catch (error) {
         console.error(error);
@@ -36,8 +31,7 @@ export const getAccounts = async (req, res) => {
 
 export const getAccount = async (req, res) => {
     try {
-        const { id } = req.params;
-        const account = await getAccountById(id);
+        const account = await accountService.getAccount(req.params.id);
 
         if (!account) {
             return res.status(404).json({ error: "Account not found" });
@@ -52,8 +46,9 @@ export const getAccount = async (req, res) => {
 
 export const getAccountByUsername = async (req, res) => {
     try {
-        const { username } = req.params;
-        const account = await fetchUser(username);
+        const account = await accountService.getAccountByUsername(
+            req.params.username
+        );
 
         if (!account) {
             return res.status(404).json({ error: "Account not found" });
@@ -68,15 +63,15 @@ export const getAccountByUsername = async (req, res) => {
 
 export const updateAccountController = async (req, res) => {
     try {
-        const { id } = req.params;
-        const account = await getAccountById(id);
+        const updated = await accountService.updateAccount(
+            req.params.id,
+            req.body
+        );
 
-        if (!account) {
+        if (!updated) {
             return res.status(404).json({ error: "Account not found" });
         }
 
-        await updateAccount(id, req.body);
-        const updated = await getAccountById(id);
         res.status(200).json(updated);
     } catch (error) {
         console.error(error);

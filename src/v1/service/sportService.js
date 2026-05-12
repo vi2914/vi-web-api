@@ -1,4 +1,4 @@
-const sportRepository = require('../repositories/sportRepository');
+import { getSports, getSport, createSport, updateSport, deleteSport } from '../Repository/sportRepository.js';
 
 class SportService {
     async getSports() {
@@ -22,4 +22,4 @@ class SportService {
     }
 }
 
-module.exports = new SportService();
+export default new SportService();
