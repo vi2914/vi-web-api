@@ -29,7 +29,7 @@ class MatchService {
         return await createMatch(
             data.Home_team_ID,
             data.Away_team_ID,
-            data.Referee_ID,
+            data.Referee_ID || null,
             timestamp,
             data.Arena_ID,
             data.Sport_ID
