@@ -1,5 +1,5 @@
 import { randomUUID } from "crypto";
-import { getPool } from "../data/db.js";
+import { getPool, getConnection } from "../data/db.js";
 
 /* ---------------- MATCHES ---------------- */
 
