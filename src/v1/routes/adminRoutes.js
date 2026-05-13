@@ -22,6 +22,4 @@ router.delete('/user/:uuid', authenticateToken, authorizeRole('admin'), deleteAc
 // POST | localhost:3868/api/v1/admin/user
 router.post('/user', authenticateToken, authorizeRole('admin'), createUser);
 
-router.post('/', authenticateToken, authorizeRole('admin'), register);
-
 export default router;
