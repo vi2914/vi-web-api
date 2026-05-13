@@ -1,19 +1,19 @@
 import { randomUUID } from "crypto";
-import { getPool } from "../data/db.js";
+import { getPool, getConnection } from "../data/db.js";
 
 /* ---------------- AGE GROUP ---------------- */
 
 export async function createAgeGroup(ageGroupName) {
     const id = randomUUID();
-    const pool = await getPool();
+    const connection = await getConnection();
 
-    await pool.query(
+    await connection.execute(
         `INSERT INTO Age_Group (Age_group_ID, Group_name)
          VALUES (?, ?)`,
         [id, ageGroupName]
     );
 
-    const [rows] = await pool.query(
+    const [rows] = await connection.execute(
         `SELECT * FROM Age_Group WHERE Age_group_ID = ?`,
         [id]
     );
@@ -22,16 +22,16 @@ export async function createAgeGroup(ageGroupName) {
 }
 
 export async function getAgeGroups() {
-    const pool = await getPool();
-    const [rows] = await pool.query(
+    const connection = await getConnection();
+    const [rows] = await connection.execute(
         'SELECT * FROM Age_Group ORDER BY Group_name'
     );
     return rows;
 }
 
 export async function getAgeGroup(id) {
-    const pool = await getPool();
-    const [rows] = await pool.query(
+    const connection = await getConnection();
+    const [rows] = await connection.execute(
         'SELECT * FROM Age_Group WHERE Age_group_ID = ?',
         [id]
     );
@@ -39,8 +39,8 @@ export async function getAgeGroup(id) {
 }
 
 export async function deleteAgeGroup(id) {
-    const pool = await getPool();
-    await pool.query(
+    const connection = await getConnection();
+    await connection.execute(
         'DELETE FROM Age_Group WHERE Age_group_ID = ?',
         [id]
     );
@@ -48,16 +48,16 @@ export async function deleteAgeGroup(id) {
 }
 
 export async function updateAgeGroup(id, ageGroupName) {
-    const pool = await getPool();
+    const connection = await getConnection();
 
-    await pool.query(
+    await connection.execute(
         `UPDATE Age_Group
          SET Group_name = ?
          WHERE Age_group_ID = ?`,
         [ageGroupName, id]
     );
 
-    const [rows] = await pool.query(
+    const [rows] = await connection.execute(
         `SELECT * FROM Age_Group WHERE Age_group_ID = ?`,
         [id]
     );
@@ -69,15 +69,15 @@ export async function updateAgeGroup(id, ageGroupName) {
 
 export async function createArena(arenaName, capacity, location) {
     const id = randomUUID();
-    const pool = await getPool();
+    const connection = await getConnection();
 
-    await pool.query(
+    await connection.execute(
         `INSERT INTO Arena (Arena_ID, Arena_name, Capacity, Location)
          VALUES (?, ?, ?, ?)`,
         [id, arenaName, capacity, location]
     );
 
-    const [rows] = await pool.query(
+    const [rows] = await connection.execute(
         `SELECT * FROM Arena WHERE Arena_ID = ?`,
         [id]
     );
@@ -86,16 +86,16 @@ export async function createArena(arenaName, capacity, location) {
 }
 
 export async function getArenas() {
-    const pool = await getPool();
-    const [rows] = await pool.query(
+    const connection = await getConnection();
+    const [rows] = await connection.execute(
         'SELECT * FROM Arena ORDER BY Arena_name'
     );
     return rows;
 }
 
 export async function getArena(id) {
-    const pool = await getPool();
-    const [rows] = await pool.query(
+    const connection = await getConnection();
+    const [rows] = await connection.execute(
         'SELECT * FROM Arena WHERE Arena_ID = ?',
         [id]
     );
@@ -103,8 +103,8 @@ export async function getArena(id) {
 }
 
 export async function deleteArena(id) {
-    const pool = await getPool();
-    await pool.query(
+    const connection = await getConnection();
+    await connection.execute(
         'DELETE FROM Arena WHERE Arena_ID = ?',
         [id]
     );
@@ -112,16 +112,16 @@ export async function deleteArena(id) {
 }
 
 export async function updateArena(id, arenaName, capacity, location) {
-    const pool = await getPool();
+    const connection = await getConnection();
 
-    await pool.query(
+    await connection.execute(
         `UPDATE Arena
          SET Arena_name = ?, Capacity = ?, Location = ?
          WHERE Arena_ID = ?`,
         [arenaName, capacity, location, id]
     );
 
-    const [rows] = await pool.query(
+    const [rows] = await connection.execute(
         `SELECT * FROM Arena WHERE Arena_ID = ?`,
         [id]
     );

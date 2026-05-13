@@ -1,17 +1,17 @@
 import { randomUUID } from "crypto";
-import { getPool } from "../data/db.js";
+import { getPool, getConnection } from "../data/db.js";
 
 export async function getSports() {
-    const pool = await getPool();
-    const [rows] = await pool.query(
+    const connection = await getConnection();
+    const [rows] = await connection.execute(
         'SELECT * FROM Sport ORDER BY Sport_name'
     );
     return rows;
 }
 
 export async function getSport(id) {
-    const pool = await getPool();
-    const [rows] = await pool.query(
+    const connection = await getConnection();
+    const [rows] = await connection.execute(
         'SELECT * FROM Sport WHERE Sport_ID = ?',
         [id]
     );
@@ -20,15 +20,15 @@ export async function getSport(id) {
 
 export async function createSport(sportName) {
     const id = randomUUID();
-    const pool = await getPool();
+    const connection = await getConnection();
 
-    await pool.query(
+    await connection.execute(
         `INSERT INTO Sport (Sport_ID, Sport_name)
          VALUES (?, ?)`,
         [id, sportName]
     );
 
-    const [rows] = await pool.query(
+    const [rows] = await connection.execute(
         'SELECT * FROM Sport WHERE Sport_ID = ?',
         [id]
     );
@@ -37,16 +37,16 @@ export async function createSport(sportName) {
 }
 
 export async function updateSport(id, sportName) {
-    const pool = await getPool();
+    const connection = await getConnection();
 
-    await pool.query(
+    await connection.execute(
         `UPDATE Sport
          SET Sport_name = ?
          WHERE Sport_ID = ?`,
         [sportName, id]
     );
 
-    const [rows] = await pool.query(
+    const [rows] = await connection.execute(
         'SELECT * FROM Sport WHERE Sport_ID = ?',
         [id]
     );
@@ -55,8 +55,8 @@ export async function updateSport(id, sportName) {
 }
 
 export async function deleteSport(id) {
-    const pool = await getPool();
-    await pool.query(
+    const connection = await getConnection();
+    await connection.execute(
         'DELETE FROM Sport WHERE Sport_ID = ?',
         [id]
     );
