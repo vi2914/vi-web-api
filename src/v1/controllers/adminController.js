@@ -74,3 +74,23 @@ export const deleteAccountById = async (req, res) => {
         });
     }
 };
+
+export const createUser = async (req, res) => {
+    try {
+        const result = await adminService.register(
+            req.body
+        );
+        res.status(201).json(result);
+
+    } catch (error) {
+        console.error(error);
+        if (error.message.includes("required")) {
+            return res.status(400).json({
+                error: error.message
+            });
+        }
+        res.status(500).json({
+            error: "Internal Server Error"
+        });
+    }
+};

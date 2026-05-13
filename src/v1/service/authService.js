@@ -7,30 +7,6 @@ import { createUser as createAccountUser, fetchUser as fetchAccountUser } from "
 
 
 class AuthService {
-    async register(data) {
-        const { email, username, password, roles = [] } = data;
-
-        if (!email || !username || !password) {
-            throw new Error("Email, username, and password are required");
-        }
-
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        const result = await createAccountUser(
-            email,
-            username,
-            hashedPassword,
-            roles
-        );
-
-        return {
-            uuid: result.uuid,
-            email,
-            username,
-            roles
-        };
-    }
-
     async login(data) {
         const SECRET_KEY = process.env.JWT_SECRET;
 
