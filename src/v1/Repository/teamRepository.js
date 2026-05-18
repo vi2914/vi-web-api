@@ -108,7 +108,7 @@ export async function getPlayersInTeam(teamId) {
     return rows;
 }
 
-export async function createTeamWithPlayers(teamName, sportId, ageGroupId, playerIds) {
+export async function createTeamWithPlayers(teamName, managerId, sportId, ageGroupId, playerIds) {
     const connection = await getConnection();
     const teamId = randomUUID();
 
@@ -116,9 +116,9 @@ export async function createTeamWithPlayers(teamName, sportId, ageGroupId, playe
         await connection.beginTransaction();
 
         await connection.execute(
-            `INSERT INTO Team (Team_ID, Team_name, Sport_ID, Age_Group_ID)
-             VALUES (?, ?, ?, ?)`,
-            [teamId, teamName, sportId, ageGroupId]
+            `INSERT INTO Team (Team_ID, Team_name, Manager_ID, Sport_ID, Age_Group_ID)
+             VALUES (?, ?, ?, ?, ?)`,
+            [teamId, teamName, managerId, sportId, ageGroupId]
         );
 
         for (const playerId of playerIds) {
