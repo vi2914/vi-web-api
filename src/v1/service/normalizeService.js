@@ -28,13 +28,13 @@ class NormalizeService {
         return await createAgeGroup(data.Group_name);
     }
     async createArena(data) {
-        return await createArena(data.Arena_name);
+        return await createArena(data.Arena_name, data.Capacity, data.Location);
     }
     async updateAgeGroup(id, data) {
         return await updateAgeGroup(id, data.Group_name);
     }
     async updateArena(id, data) {
-        return await updateArena(id, data.Arena_name);
+        return await updateArena(id, data.Arena_name, data.Capacity, data.Location);
     }
     async deleteAgeGroup(id) {
         return await deleteAgeGroup(id);
