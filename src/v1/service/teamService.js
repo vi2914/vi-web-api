@@ -25,11 +25,11 @@ class TeamService {
     }
 
     async createTeam(data) {
-        return await createTeam(data.Team_name);
+        return await createTeam(data.Team_name, data.Manager_ID, data.Sport_ID, data.Age_Group_ID);
     }
 
     async updateTeam(id, data) {
-        return await updateTeam(id, data.Team_name);
+        return await updateTeam(id, data.Team_name, data.Manager_ID, data.Sport_ID, data.Age_Group_ID);
     }
 
     async deleteTeam(id) {
@@ -53,11 +53,11 @@ class TeamService {
     }
 
     async createTeamWithPlayers(teamData, playerIds) {
-        return await createTeamWithPlayers(teamData.Team_name, playerIds);
+        return await createTeamWithPlayers(teamData.Team_name, teamData.SportId, teamData.AgeGroupId, playerIds);
     }
 
     async createPlayer(playerData) {
-        return await createPlayer(playerData);
+        return await createPlayer(playerData.First_name, playerData.Last_name, playerData.Player_number);
     }
 
     async addTeamManager(teamId, managerId) {
