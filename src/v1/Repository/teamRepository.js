@@ -23,9 +23,9 @@ export async function createTeam(teamName, managerId, sportId, ageGroupId) {
     const connection = await getConnection();
 
     await connection.execute(
-        `INSERT INTO Team (Team_ID, Team_name, Manager_ID, Sport_ID, Age_Group_ID)
-         VALUES (?, ?, ?, ?, ?)`,
-        [id, teamName, managerId, sportId, ageGroupId]
+        `INSERT INTO Team (Team_ID, Team_name, Sport_ID, Age_Group_ID)
+         VALUES (?, ?, ?, ?)`,
+        [id, teamName, sportId, ageGroupId]
     );
 
     const [rows] = await connection.execute(
@@ -41,9 +41,9 @@ export async function updateTeam(id, teamName, managerId, sportId, ageGroupId) {
 
     await connection.execute(
         `UPDATE Team
-         SET Team_name = ?, Manager_ID = ?, Sport_ID = ?, Age_Group_ID = ?
+         SET Team_name = ?, Sport_ID = ?, Age_Group_ID = ?
          WHERE Team_ID = ?`,
-        [teamName, managerId, sportId, ageGroupId, id]
+        [teamName, sportId, ageGroupId, id]
     );
 
     const [rows] = await connection.execute(
